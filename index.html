@@ -29,7 +29,7 @@
       padding: max(34px, env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) max(42px, env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
     }
 
-    main { width: min(1180px, 100%); min-width: 0; margin: 0 auto; }
+    main { width: min(1180px, 100%); min-width: 0; max-width: 100%; margin: 0 auto; overflow: clip; }
     header { margin: 0 0 30px; }
     .eyebrow {
       margin: 0 0 9px;
@@ -46,6 +46,7 @@
       letter-spacing: -.055em;
       font-weight: 780;
     }
+    .nowrap { white-space: nowrap; }
     .lead {
       max-width: 680px;
       margin: 16px 0 0;
@@ -71,6 +72,8 @@
     .card.featured { grid-column: 1 / -1; }
     .media {
       position: relative;
+      min-width: 0;
+      max-width: 100%;
       overflow: hidden;
       aspect-ratio: 16 / 9;
       background: #d8d0c3;
@@ -79,6 +82,8 @@
     video {
       display: block;
       width: 100%;
+      max-width: 100%;
+      min-width: 0;
       height: 100%;
       object-fit: cover;
       background: #d8d0c3;
@@ -101,7 +106,7 @@
       pointer-events: none;
     }
     .media:hover::after { opacity: 1; transform: translateY(0); }
-    .body { padding: 18px 19px 20px; }
+    .body { min-width: 0; max-width: 100%; padding: 18px 19px 20px; }
     .tags { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 10px; }
     .tag {
       padding: 5px 8px;
@@ -164,12 +169,18 @@
     footer { margin-top: 26px; font-size: 11px; color: rgba(33,29,24,.45); }
 
     @media (max-width: 720px) {
-      body { padding-top: max(24px, env(safe-area-inset-top)); }
+      body {
+        padding-top: max(24px, env(safe-area-inset-top));
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+      }
       header { margin-bottom: 22px; }
-      .gallery { grid-template-columns: 1fr; gap: 14px; }
+      .gallery { width: 100%; max-width: 100%; grid-template-columns: minmax(0, 1fr); gap: 14px; }
       .card.featured { grid-column: auto; }
-      .card { border-radius: 16px; }
+      .card { width: 100%; max-width: 100%; border-radius: 16px; }
       .body { padding: 15px 15px 17px; }
+      h1 { font-size: clamp(31px, 10vw, 44px); }
+      .lead { overflow-wrap: anywhere; }
       .media::after { display: none; }
       dialog { border-radius: 15px; }
     }
@@ -183,14 +194,14 @@
   <main>
     <header>
       <p class="eyebrow">3D SHOGI · MOTION STUDIES</p>
-      <h1>駒が、戦場で動き出す。</h1>
+      <h1>駒が、<span class="nowrap">戦場で動き出す。</span></h1>
       <p class="lead">3D将棋のLP・PV用に制作している短尺モーションのギャラリーです。すべてUnityの実シーンから書き出したプレビューです。</p>
     </header>
 
     <section class="gallery" aria-label="プロモーションモーション一覧">
       <article class="card featured">
         <div class="media" data-title="駒が、兵になる。" data-webm="media/promo_pawn_transform_1080p.webm?v=3" data-mp4="media/promo_pawn_transform_1080p.mp4?v=3">
-          <video muted loop playsinline preload="metadata" poster="media/still_pawn_transform.png">
+          <video muted loop playsinline preload="metadata" poster="media/still_pawn_transform.png?v=3">
             <source src="media/promo_pawn_transform_1080p.webm?v=3" type="video/webm" />
             <source src="media/promo_pawn_transform_1080p.mp4?v=3" type="video/mp4" />
           </video>
@@ -204,10 +215,10 @@
       </article>
 
       <article class="card">
-        <div class="media" data-title="歩が、とになる。" data-webm="media/promo_promotion_1080p.webm?v=1" data-mp4="media/promo_promotion_1080p.mp4?v=1">
-          <video muted loop playsinline preload="metadata" poster="media/still_promotion.png">
-            <source src="media/promo_promotion_1080p.webm?v=1" type="video/webm" />
-            <source src="media/promo_promotion_1080p.mp4?v=1" type="video/mp4" />
+        <div class="media" data-title="歩が、とになる。" data-webm="media/promo_promotion_1080p.webm?v=2" data-mp4="media/promo_promotion_1080p.mp4?v=2">
+          <video muted loop playsinline preload="metadata" poster="media/still_promotion.png?v=2">
+            <source src="media/promo_promotion_1080p.webm?v=2" type="video/webm" />
+            <source src="media/promo_promotion_1080p.mp4?v=2" type="video/mp4" />
           </video>
         </div>
         <div class="body">
@@ -219,16 +230,31 @@
       </article>
 
       <article class="card">
-        <div class="media" data-title="倒した敵が、味方になる。" data-webm="media/promo_conversion_1080p.webm?v=1" data-mp4="media/promo_conversion_1080p.mp4?v=1">
-          <video muted loop playsinline preload="metadata" poster="media/still_conversion.png">
-            <source src="media/promo_conversion_1080p.webm?v=1" type="video/webm" />
-            <source src="media/promo_conversion_1080p.mp4?v=1" type="video/mp4" />
+        <div class="media" data-title="倒した敵が、味方になる。" data-webm="media/promo_conversion_1080p.webm?v=2" data-mp4="media/promo_conversion_1080p.mp4?v=2">
+          <video muted loop playsinline preload="metadata" poster="media/still_conversion.png?v=2">
+            <source src="media/promo_conversion_1080p.webm?v=2" type="video/webm" />
+            <source src="media/promo_conversion_1080p.mp4?v=2" type="video/mp4" />
           </video>
         </div>
         <div class="body">
           <div class="tags"><span class="tag">撃破</span><span class="tag">味方化</span></div>
           <h2>倒した敵が、味方になる。</h2>
           <p class="description">敵兵が倒れ、少し間を置いて味方として復帰。最後は既存の味方と同じ方向を向いて並びます。</p>
+          <div class="meta">1920×1080 · 30fps · Unity render</div>
+        </div>
+      </article>
+
+      <article class="card featured">
+        <div class="media" data-title="盤上を、軍勢が駆ける。" data-webm="media/promo_army_advance_1080p.webm?v=1" data-mp4="media/promo_army_advance_1080p.mp4?v=1">
+          <video muted loop playsinline preload="metadata" poster="media/still_army_advance.png?v=1">
+            <source src="media/promo_army_advance_1080p.webm?v=1" type="video/webm" />
+            <source src="media/promo_army_advance_1080p.mp4?v=1" type="video/mp4" />
+          </video>
+        </div>
+        <div class="body">
+          <div class="tags"><span class="tag">軍勢</span><span class="tag">5体</span><span class="tag">1マス</span></div>
+          <h2>盤上を、軍勢が駆ける。</h2>
+          <p class="description">5体の歩兵がV字の隊列を保ちながら、盤の目に沿って一斉に1マス前進します。</p>
           <div class="meta">1920×1080 · 30fps · Unity render</div>
         </div>
       </article>
